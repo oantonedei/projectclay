@@ -157,12 +157,13 @@ const NewsletterInput = styled.input`
 `;
 
 const NewsletterButton = styled.button`
-  padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.lg};
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.lg};
   background: linear-gradient(135deg, ${props => props.theme.colors.white} 0%, rgba(255, 255, 255, 0.9) 100%);
   color: ${props => props.theme.colors.primary};
   border: none;
-  border-radius: ${props => props.theme.borderRadius.lg};
+  border-radius: ${props => props.theme.borderRadius.md};
   font-weight: ${props => props.theme.fontWeights.medium};
+  font-size: ${props => props.theme.fontSizes.sm};
   cursor: pointer;
   transition: all 0.3s ease;
   

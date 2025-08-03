@@ -10,12 +10,72 @@ const HomeContainer = styled.div`
 
 const HeroSection = styled.section`
   min-height: 100vh;
-  background: linear-gradient(135deg, ${props => props.theme.colors.white} 0%, ${props => props.theme.colors.cream} 100%);
+  background: ${props => props.theme.colors.white};
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
+`;
+
+const HeroContent = styled.div`
+  position: relative;
+  z-index: 3;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 ${props => props.theme.spacing.md};
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: ${props => props.theme.spacing['3xl']};
+  align-items: center;
   
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    grid-template-columns: 1fr;
+    gap: ${props => props.theme.spacing['2xl']};
+    text-align: center;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 0 ${props => props.theme.spacing.sm};
+  }
+`;
+
+const HeroText = styled.div`
+  position: relative;
+  z-index: 4;
+`;
+
+const HeroImageContainer = styled.div`
+  position: relative;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    height: 550px;
+    order: -1;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    height: 500px;
+  }
+`;
+
+const HeroImage = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: ${props => props.theme.borderRadius.xl};
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Resonance Effect */
   &::before {
     content: '';
     position: absolute;
@@ -23,35 +83,77 @@ const HeroSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2076&q=80') center/cover;
-    opacity: 0.08;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(167, 139, 250, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
     z-index: 1;
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
+  
+  /* Resonance Pulse Animation */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    animation: resonance-pulse 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+  }
+  
+  @keyframes resonance-pulse {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(2);
+      opacity: 0;
+    }
+  }
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
-const HeroContent = styled.div`
-  position: relative;
-  z-index: 2;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 ${props => props.theme.spacing.md};
-  text-align: center;
-  
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 0 ${props => props.theme.spacing.sm};
-  }
+const BackgroundImage = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=2076&q=80') center/cover;
+  z-index: 0;
 `;
 
 const HeroTitle = styled(motion.h1)`
-  font-size: ${props => props.theme.fontSizes['6xl']};
+  font-size: ${props => props.theme.fontSizes['5xl']};
   font-weight: ${props => props.theme.fontWeights.bold};
   color: ${props => props.theme.colors.darkPurple};
   margin-bottom: ${props => props.theme.spacing.lg};
-  line-height: 1.1;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  line-height: 1.2;
+  
+  span {
+    color: ${props => props.theme.colors.primary};
+  }
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    font-size: ${props => props.theme.fontSizes['4xl']};
+    font-size: ${props => props.theme.fontSizes['3xl']};
   }
 `;
 
@@ -59,10 +161,14 @@ const HeroSubtitle = styled(motion.p)`
   font-size: ${props => props.theme.fontSizes.xl};
   color: ${props => props.theme.colors.text};
   margin-bottom: ${props => props.theme.spacing['2xl']};
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  line-height: 1.6;
+  
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     font-size: ${props => props.theme.fontSizes.lg};
@@ -72,8 +178,11 @@ const HeroSubtitle = styled(motion.p)`
 const HeroButtons = styled(motion.div)`
   display: flex;
   gap: ${props => props.theme.spacing.md};
-  justify-content: center;
   flex-wrap: wrap;
+  
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    justify-content: center;
+  }
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     flex-direction: column;
@@ -85,69 +194,27 @@ const HeroButton = styled(Link)`
   display: inline-flex;
   align-items: center;
   gap: ${props => props.theme.spacing.sm};
-  padding: ${props => props.theme.spacing.lg} ${props => props.theme.spacing['2xl']};
-  border-radius: ${props => props.theme.borderRadius.xl};
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.lg};
+  border-radius: ${props => props.theme.borderRadius.md};
   font-weight: ${props => props.theme.fontWeights.semibold};
   text-decoration: none;
-  transition: all ${props => props.theme.transitions.normal};
-  font-size: ${props => props.theme.fontSizes.lg};
-  position: relative;
-  overflow: hidden;
+  transition: all 0.3s ease;
+  font-size: ${props => props.theme.fontSizes.sm};
   
   &.primary {
-    background: linear-gradient(135deg, ${props => props.theme.colors.primary} 0%, ${props => props.theme.colors.accent} 100%);
+    background: ${props => props.theme.colors.primary};
     color: ${props => props.theme.colors.white};
-    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
     
     &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(139, 92, 246, 0.4);
+      background: ${props => props.theme.colors.darkPurple};
+      transform: translateY(-2px);
     }
   }
   
   &.secondary {
-    background: ${props => props.theme.colors.white};
+    background: transparent;
     color: ${props => props.theme.colors.primary};
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-      background-image: 
-        radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.25) 0%, transparent 50%),
-        radial-gradient(circle at 80% 30%, rgba(139, 92, 246, 0.22) 0%, transparent 50%),
-        radial-gradient(circle at 40% 70%, rgba(139, 92, 246, 0.24) 0%, transparent 50%),
-        radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.21) 0%, transparent 50%),
-        radial-gradient(circle at 60% 40%, rgba(139, 92, 246, 0.28) 0%, transparent 40%),
-        radial-gradient(circle at 10% 60%, rgba(139, 92, 246, 0.26) 0%, transparent 40%),
-        radial-gradient(circle at 70% 90%, rgba(139, 92, 246, 0.23) 0%, transparent 40%);
-      animation: float 26s ease-in-out infinite;
-    }
-    
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-      background-image: 
-        radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.32) 0%, transparent 20%),
-        radial-gradient(circle at 75% 35%, rgba(139, 92, 246, 0.29) 0%, transparent 25%),
-        radial-gradient(circle at 45% 75%, rgba(139, 92, 246, 0.31) 0%, transparent 22%),
-        radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.27) 0%, transparent 18%),
-        radial-gradient(circle at 65% 15%, rgba(139, 92, 246, 0.34) 0%, transparent 15%),
-        radial-gradient(circle at 35% 55%, rgba(139, 92, 246, 0.30) 0%, transparent 20%),
-        radial-gradient(circle at 90% 65%, rgba(139, 92, 246, 0.28) 0%, transparent 16%);
-      animation: float 31s ease-in-out infinite reverse;
-    }
+    border: 2px solid ${props => props.theme.colors.primary};
     
     &:hover {
       background: ${props => props.theme.colors.primary};
@@ -363,11 +430,12 @@ const TestimonialCard = styled(motion.div)`
   }
 `;
 
-const TestimonialText = styled.p`
-  font-style: italic;
+const TestimonialText = styled.div`
+  font-size: ${props => props.theme.fontSizes.lg};
   color: ${props => props.theme.colors.text};
-  margin-bottom: ${props => props.theme.spacing.lg};
+  font-style: italic;
   line-height: 1.6;
+  margin-bottom: ${props => props.theme.spacing.lg};
 `;
 
 const TestimonialAuthor = styled.div`
@@ -377,29 +445,35 @@ const TestimonialAuthor = styled.div`
 `;
 
 const AuthorAvatar = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: linear-gradient(135deg, ${props => props.theme.colors.primary} 0%, ${props => props.theme.colors.accent} 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${props => props.theme.colors.white};
-  font-weight: ${props => props.theme.fontWeights.bold};
+  color: white;
+  font-size: ${props => props.theme.fontSizes.sm};
+  font-weight: ${props => props.theme.fontWeights.medium};
 `;
 
-const AuthorInfo = styled.div``;
+const AuthorInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
-const AuthorName = styled.h4`
+const AuthorName = styled.div`
+  font-size: ${props => props.theme.fontSizes.md};
+  color: ${props => props.theme.colors.primary};
   font-weight: ${props => props.theme.fontWeights.semibold};
-  color: ${props => props.theme.colors.darkPurple};
-  margin-bottom: 2px;
 `;
 
-const AuthorTitle = styled.p`
+const AuthorTitle = styled.div`
   font-size: ${props => props.theme.fontSizes.sm};
   color: ${props => props.theme.colors.textLight};
 `;
+
+
 
 const CTASection = styled.section`
   padding: ${props => props.theme.spacing['4xl']} 0;
@@ -439,14 +513,14 @@ const CTAButton = styled(Link)`
   display: inline-flex;
   align-items: center;
   gap: ${props => props.theme.spacing.sm};
-  padding: ${props => props.theme.spacing.lg} ${props => props.theme.spacing['2xl']};
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.lg};
   background: linear-gradient(135deg, ${props => props.theme.colors.primary} 0%, ${props => props.theme.colors.secondary} 100%);
   color: ${props => props.theme.colors.white};
-  border-radius: ${props => props.theme.borderRadius.xl};
+  border-radius: ${props => props.theme.borderRadius.md};
   font-weight: ${props => props.theme.fontWeights.semibold};
   text-decoration: none;
   transition: all ${props => props.theme.transitions.normal};
-  font-size: ${props => props.theme.fontSizes.lg};
+  font-size: ${props => props.theme.fontSizes.sm};
   
   &:hover {
     transform: translateY(-3px);
@@ -477,47 +551,50 @@ const Home = () => {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 }
-    }
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
   };
 
   return (
     <HomeContainer>
       <HeroSection>
         <HeroContent>
-          <HeroTitle
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            Molding Lives Through Faith
-          </HeroTitle>
-          <HeroSubtitle
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Christ-centered therapy, coaching, and mentorship for women and families. 
-            Discover healing, growth, and purpose through faith-based mental health services.
-          </HeroSubtitle>
-          <HeroButtons
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <HeroButton to="/therapy-coaching" className="primary">
-              <FiHeart />
-              Book a Session
-            </HeroButton>
-            <HeroButton to="/about" className="secondary">
-              <FiArrowRight />
-              Learn More
-            </HeroButton>
-          </HeroButtons>
+          <HeroText>
+            <HeroTitle
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Molding Lives Through <span>Faith</span>
+            </HeroTitle>
+            <HeroSubtitle
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Christ-centered therapy, coaching, and mentorship for women and families. 
+              Discover healing, growth, and purpose through faith-based mental health services.
+            </HeroSubtitle>
+            <HeroButtons
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <HeroButton to="/therapy-coaching" className="primary">
+                <FiHeart />
+                Book a Session
+              </HeroButton>
+              <HeroButton to="/about" className="secondary">
+                <FiArrowRight />
+                Learn More
+              </HeroButton>
+            </HeroButtons>
+          </HeroText>
+                      <HeroImageContainer>
+              <HeroImage>
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80" alt="Hero Image" />
+              </HeroImage>
+            </HeroImageContainer>
         </HeroContent>
       </HeroSection>
 

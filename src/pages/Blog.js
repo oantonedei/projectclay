@@ -133,8 +133,9 @@ const ReadMoreButton = styled.button`
   color: ${props => props.theme.colors.white};
   padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.lg};
   border: none;
-  border-radius: ${props => props.theme.borderRadius.full};
+  border-radius: ${props => props.theme.borderRadius.md};
   font-weight: ${props => props.theme.fontWeights.medium};
+  font-size: ${props => props.theme.fontSizes.sm};
   cursor: pointer;
   transition: all ${props => props.theme.transitions.normal};
   
@@ -277,10 +278,11 @@ const DownloadButton = styled.button`
   gap: ${props => props.theme.spacing.sm};
   background: linear-gradient(135deg, ${props => props.theme.colors.primary}, ${props => props.theme.colors.secondary});
   color: ${props => props.theme.colors.white};
-  padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.lg};
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.lg};
   border: none;
-  border-radius: ${props => props.theme.borderRadius.full};
+  border-radius: ${props => props.theme.borderRadius.md};
   font-weight: ${props => props.theme.fontWeights.medium};
+  font-size: ${props => props.theme.fontSizes.sm};
   cursor: pointer;
   transition: all ${props => props.theme.transitions.normal};
   

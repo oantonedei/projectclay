@@ -8,13 +8,73 @@ const AboutContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  min-height: 60vh;
-  background: linear-gradient(135deg, ${props => props.theme.colors.white} 0%, ${props => props.theme.colors.cream} 100%);
+  min-height: 100vh;
+  background: ${props => props.theme.colors.white};
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
+`;
+
+const HeroContent = styled.div`
+  position: relative;
+  z-index: 3;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 ${props => props.theme.spacing.md};
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: ${props => props.theme.spacing['3xl']};
+  align-items: center;
   
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    grid-template-columns: 1fr;
+    gap: ${props => props.theme.spacing['2xl']};
+    text-align: center;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 0 ${props => props.theme.spacing.sm};
+  }
+`;
+
+const HeroText = styled.div`
+  position: relative;
+  z-index: 4;
+`;
+
+const HeroImageContainer = styled.div`
+  position: relative;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    height: 550px;
+    order: -1;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    height: 500px;
+  }
+`;
+
+const HeroImage = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: ${props => props.theme.borderRadius.xl};
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Resonance Effect */
   &::before {
     content: '';
     position: absolute;
@@ -22,23 +82,62 @@ const HeroSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2076&q=80') center/cover;
-    opacity: 0.06;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(167, 139, 250, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
     z-index: 1;
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
+  
+  /* Resonance Pulse Animation */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    animation: resonance-pulse 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+  }
+  
+  @keyframes resonance-pulse {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(2);
+      opacity: 0;
+    }
+  }
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
-const HeroContent = styled.div`
-  position: relative;
-  z-index: 2;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 ${props => props.theme.spacing.md};
-  text-align: center;
-  
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 0 ${props => props.theme.spacing.sm};
-  }
+const BackgroundImage = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+      background: url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=2076&q=80') center/cover;
+  z-index: 0;
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -47,7 +146,10 @@ const HeroTitle = styled(motion.h1)`
   color: ${props => props.theme.colors.darkPurple};
   margin-bottom: ${props => props.theme.spacing.lg};
   line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  span {
+    color: ${props => props.theme.colors.primary};
+  }
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     font-size: ${props => props.theme.fontSizes['3xl']};
@@ -57,10 +159,15 @@ const HeroTitle = styled(motion.h1)`
 const HeroSubtitle = styled(motion.p)`
   font-size: ${props => props.theme.fontSizes.xl};
   color: ${props => props.theme.colors.text};
-  max-width: 800px;
-  margin: 0 auto;
-  line-height: 1.7;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: ${props => props.theme.spacing['2xl']};
+  max-width: 500px;
+  line-height: 1.6;
+  
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     font-size: ${props => props.theme.fontSizes.lg};
@@ -137,7 +244,7 @@ const MissionImage = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2076&q=80') center/cover;
+    background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2076&q=80') center/cover;
     z-index: 1;
   }
   
@@ -455,21 +562,28 @@ const About = () => {
     <AboutContainer>
       <HeroSection>
         <HeroContent>
-          <HeroTitle
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            About Project Clay
-          </HeroTitle>
-          <HeroSubtitle
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            A Christ-centered initiative dedicated to molding women and families into all God has called them to be. 
-            Rooted in Isaiah 64:8, we provide comprehensive mental health services that integrate faith and professional care.
-          </HeroSubtitle>
+          <HeroText>
+            <HeroTitle
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              About Project Clay
+            </HeroTitle>
+            <HeroSubtitle
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              A Christ-centered initiative dedicated to molding women and families into all God has called them to be. 
+              Rooted in Isaiah 64:8, we provide comprehensive mental health services that integrate faith and professional care.
+            </HeroSubtitle>
+          </HeroText>
+                      <HeroImageContainer>
+              <HeroImage>
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2076&q=80" alt="About Project Clay" />
+              </HeroImage>
+            </HeroImageContainer>
         </HeroContent>
       </HeroSection>
 

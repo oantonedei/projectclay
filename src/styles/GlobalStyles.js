@@ -337,9 +337,10 @@ const GlobalStyles = createGlobalStyle`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.xl};
-    border-radius: ${props => props.theme.borderRadius.lg};
+    padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.lg};
+    border-radius: ${props => props.theme.borderRadius.md};
     font-weight: ${props => props.theme.fontWeights.medium};
+    font-size: ${props => props.theme.fontSizes.sm};
     text-decoration: none;
     transition: all ${props => props.theme.transitions.normal};
     cursor: pointer;

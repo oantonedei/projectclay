@@ -22,22 +22,59 @@ const HeroSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2076&q=80') center/cover;
-    opacity: 0.06;
+    background: url('https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
+    opacity: 0.4;
     z-index: 1;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(248, 250, 252, 0.3) 100%);
+    z-index: 2;
   }
 `;
 
 const HeroContent = styled.div`
   position: relative;
-  z-index: 2;
+  z-index: 3;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 ${props => props.theme.spacing.md};
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: ${props => props.theme.spacing['3xl']};
+  align-items: center;
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
     padding: 0 ${props => props.theme.spacing.sm};
+    text-align: center;
+  }
+`;
+
+const HeroText = styled.div`
+  text-align: left;
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    text-align: center;
+  }
+`;
+
+const HeroImage = styled.div`
+  position: relative;
+  height: 500px;
+  border-radius: ${props => props.theme.borderRadius.xl};
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    height: 350px;
+    order: -1;
   }
 `;
 
@@ -47,7 +84,7 @@ const HeroTitle = styled(motion.h1)`
   color: ${props => props.theme.colors.darkPurple};
   margin-bottom: ${props => props.theme.spacing.lg};
   line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     font-size: ${props => props.theme.fontSizes['3xl']};
@@ -60,7 +97,7 @@ const HeroSubtitle = styled(motion.p)`
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.7;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     font-size: ${props => props.theme.fontSizes.lg};
@@ -133,7 +170,7 @@ const ServiceImage = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2076&q=80') center/cover;
+    background: url('https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
     opacity: 0.3;
   }
 `;
@@ -493,21 +530,26 @@ const TherapyCoaching = () => {
     <TherapyContainer>
       <HeroSection>
         <HeroContent>
-          <HeroTitle
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            Therapy & Coaching Services
-          </HeroTitle>
-          <HeroSubtitle
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Professional mental health therapy and life coaching services rooted in Christian principles. 
-            Discover healing, growth, and purpose through faith-based care.
-          </HeroSubtitle>
+          <HeroText>
+            <HeroTitle
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Therapy & Coaching Services
+            </HeroTitle>
+            <HeroSubtitle
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Professional mental health therapy and life coaching services rooted in Christian principles. 
+              Discover healing, growth, and purpose through faith-based care.
+            </HeroSubtitle>
+          </HeroText>
+          <HeroImage>
+            <img src="https://images.unsplash.com/photo-1517486803000-000000000000?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Therapy and Coaching" />
+          </HeroImage>
         </HeroContent>
       </HeroSection>
 

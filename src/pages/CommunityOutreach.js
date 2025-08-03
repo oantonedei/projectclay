@@ -8,22 +8,100 @@ const OutreachContainer = styled.div`
 `;
 
 const HeroSection = styled.section`
-  background: linear-gradient(135deg, ${props => props.theme.colors.cream} 0%, ${props => props.theme.colors.white} 100%);
-  padding: ${props => props.theme.spacing['4xl']} 0;
-  text-align: center;
+  min-height: 60vh;
+  background: linear-gradient(135deg, ${props => props.theme.colors.white} 0%, ${props => props.theme.colors.cream} 100%);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
+    opacity: 0.4;
+    z-index: 1;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(248, 250, 252, 0.3) 100%);
+    z-index: 2;
+  }
+`;
+
+const HeroContent = styled.div`
+  position: relative;
+  z-index: 3;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 ${props => props.theme.spacing.md};
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: ${props => props.theme.spacing['3xl']};
+  align-items: center;
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+    padding: 0 ${props => props.theme.spacing.sm};
+    text-align: center;
+  }
+`;
+
+const HeroText = styled.div`
+  text-align: left;
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    text-align: center;
+  }
+`;
+
+const HeroImage = styled.div`
+  position: relative;
+  height: 500px;
+  border-radius: ${props => props.theme.borderRadius.xl};
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    height: 350px;
+    order: -1;
+  }
 `;
 
 const HeroTitle = styled(motion.h1)`
-  color: ${props => props.theme.colors.secondary};
+  font-size: ${props => props.theme.fontSizes['5xl']};
+  font-weight: ${props => props.theme.fontWeights.bold};
+  color: ${props => props.theme.colors.darkPurple};
   margin-bottom: ${props => props.theme.spacing.lg};
+  line-height: 1.2;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: ${props => props.theme.fontSizes['3xl']};
+  }
 `;
 
 const HeroSubtitle = styled(motion.p)`
-  color: ${props => props.theme.colors.textLight};
-  font-size: ${props => props.theme.fontSizes.lg};
+  font-size: ${props => props.theme.fontSizes.xl};
+  color: ${props => props.theme.colors.text};
   max-width: 800px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.7;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    font-size: ${props => props.theme.fontSizes.lg};
+  }
 `;
 
 const ProjectsSection = styled.section`
@@ -167,10 +245,11 @@ const ProjectStats = styled.div`
 const SupportButton = styled.button`
   background: linear-gradient(135deg, ${props => props.theme.colors.primary}, ${props => props.theme.colors.secondary});
   color: ${props => props.theme.colors.white};
-  padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.xl};
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.lg};
   border: none;
-  border-radius: ${props => props.theme.borderRadius.full};
+  border-radius: ${props => props.theme.borderRadius.md};
   font-weight: ${props => props.theme.fontWeights.medium};
+  font-size: ${props => props.theme.fontSizes.sm};
   cursor: pointer;
   transition: all ${props => props.theme.transitions.normal};
   
@@ -262,11 +341,11 @@ const DonationOption = styled(motion.div)`
 const DonateButton = styled.button`
   background: linear-gradient(135deg, ${props => props.theme.colors.primary}, ${props => props.theme.colors.secondary});
   color: ${props => props.theme.colors.white};
-  padding: ${props => props.theme.spacing.lg} ${props => props.theme.spacing['2xl']};
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.lg};
   border: none;
-  border-radius: ${props => props.theme.borderRadius.full};
+  border-radius: ${props => props.theme.borderRadius.md};
   font-weight: ${props => props.theme.fontWeights.medium};
-  font-size: ${props => props.theme.fontSizes.lg};
+  font-size: ${props => props.theme.fontSizes.sm};
   cursor: pointer;
   transition: all ${props => props.theme.transitions.normal};
   
@@ -407,11 +486,11 @@ const FormGroup = styled.div`
 const SubmitButton = styled.button`
   background: linear-gradient(135deg, ${props => props.theme.colors.primary}, ${props => props.theme.colors.secondary});
   color: ${props => props.theme.colors.white};
-  padding: ${props => props.theme.spacing.lg} ${props => props.theme.spacing['2xl']};
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.lg};
   border: none;
-  border-radius: ${props => props.theme.borderRadius.full};
+  border-radius: ${props => props.theme.borderRadius.md};
   font-weight: ${props => props.theme.fontWeights.medium};
-  font-size: ${props => props.theme.fontSizes.lg};
+  font-size: ${props => props.theme.fontSizes.sm};
   cursor: pointer;
   transition: all ${props => props.theme.transitions.normal};
   width: 100%;
@@ -493,20 +572,27 @@ const CommunityOutreach = () => {
     <OutreachContainer>
       <HeroSection>
         <div className="container">
-          <HeroTitle
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            Community Outreach
-          </HeroTitle>
-          <HeroSubtitle
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Making a positive impact in our community through charitable projects, free services, and volunteer support. Together, we can create lasting change and bring hope to those in need.
-          </HeroSubtitle>
+          <HeroContent>
+            <HeroText>
+              <HeroTitle
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                Community Outreach
+              </HeroTitle>
+              <HeroSubtitle
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                Making a positive impact in our community through charitable projects, free services, and volunteer support. Together, we can create lasting change and bring hope to those in need.
+              </HeroSubtitle>
+            </HeroText>
+            <HeroImage>
+              <img src="https://images.unsplash.com/photo-1517486803460-639685280e30?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Community Outreach" />
+            </HeroImage>
+          </HeroContent>
         </div>
       </HeroSection>
 
